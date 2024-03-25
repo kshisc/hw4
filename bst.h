@@ -276,8 +276,8 @@ template<class Key, class Value>
 BinarySearchTree<Key, Value>::iterator::iterator() 
 {
     // TODO
-
-}
+    current_=Null;
+} 
 
 /**
 * Provides access to the item.
@@ -309,6 +309,10 @@ BinarySearchTree<Key, Value>::iterator::operator==(
     const BinarySearchTree<Key, Value>::iterator& rhs) const
 {
     // TODO
+    if(this->current_ == rhs->current){
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -321,7 +325,10 @@ BinarySearchTree<Key, Value>::iterator::operator!=(
     const BinarySearchTree<Key, Value>::iterator& rhs) const
 {
     // TODO
-
+    if(this->current_ != rhs->current){
+        return false;
+    }
+    return true;
 }
 
 
@@ -333,7 +340,7 @@ typename BinarySearchTree<Key, Value>::iterator&
 BinarySearchTree<Key, Value>::iterator::operator++()
 {
     // TODO
-
+    current_++;
 }
 
 
@@ -356,6 +363,7 @@ template<class Key, class Value>
 BinarySearchTree<Key, Value>::BinarySearchTree() 
 {
     // TODO
+    root_=Null; 
 }
 
 template<typename Key, typename Value>
@@ -445,6 +453,26 @@ template<class Key, class Value>
 void BinarySearchTree<Key, Value>::insert(const std::pair<const Key, Value> &keyValuePair)
 {
     // TODO
+    Node<Key, Value>* temp=root_;
+    if(temp==NULL){
+        return;
+    }
+
+    while(temp!=NULL){
+        if(keyValuePair->second == temp->getValue()){
+            temp=keyValuePair;
+            return;
+        }
+
+        if(keyValuePair->second < temp->getValue()){
+            temp=temp->getLeft();
+        }
+        else{
+            temp=temp->getRight();
+        }
+    }
+
+    temp=new Node(keyValuePair);
 }
 
 

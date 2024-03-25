@@ -8,42 +8,49 @@ using namespace std;
 
 
 // You may add any prototypes of helper functions here
-int heightHelper(Node* root);
+int heightHelper(Node* root, int depth);
+int countNodes(Node* root);
 
 bool equalPaths(Node* root)
 {
-    // Add your code below
-	if(root==nullptr){ //base case
+  // Add your code below
+	if(root==nullptr){ //0 nodes
 		return true;
 	}
 
 	//Get the heights of the left and right subtrees 
-    int leftH=heightHelper(root->left);
-    int rightH=heightHelper(root->right);
+	int leftH=heightHelper(root->left,0);
+	int rightH=heightHelper(root->right,0);
 
-    if((leftH==0 && rightH==1)|| (rightH==0 && leftH==1)){ //2 nodes
-        return true;
-    }
+	//1 path
+	int numNodes=countNodes(root);
+	if(leftH+1==numNodes || rightH+1==numNodes){
+		return true;
+	}
 
 	//Determine if the node has equal paths
-	if(abs(leftH-rightH)!=0){
-		return false;
-	}
-    return true;
+	return leftH==rightH;
 }
 
-int heightHelper(Node *root) {
+int heightHelper(Node *root, int depth) {
 	if(root==nullptr){ //base case
-		return 0;
+		return depth;
 	}
 
-	int left=heightHelper(root->left); //recursive
-	int right=heightHelper(root->right);
+	int left=heightHelper(root->left, depth+1); //recursive
+	int right=heightHelper(root->right, depth+1);
+	
+	if(left>right){ //return max
+		return left;
+	}
+	else{
+		return right;
+	}
+}
 
-	if(left>right){ //return max height
-        return left+1;
-    }
-    else{
-        return right+1;
-    }
+int countNodes(Node* root){
+	if(root==nullptr){
+		return 0;
+	}
+	return 1 + countNodes(root->left) + countNodes(root->right);
 }
