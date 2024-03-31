@@ -2,9 +2,7 @@
 #include <map>
 #include "bst.h"
 #include "avlbst.h"
-
 using namespace std;
-
 
 int main(int argc, char *argv[])
 {
@@ -43,6 +41,6 @@ int main(int argc, char *argv[])
 	}
 	cout << "Erasing b" << endl;
 	at.remove('b');
-	
+
   return 0;
 }
